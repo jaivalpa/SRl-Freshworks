@@ -1,0 +1,10 @@
+steps:
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'asia-south1-docker.pkg.dev/tatvic-gcp-dev-team/shivam-repo/my-flaskimage:v1', '.']
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'asia-south1-docker.pkg.dev/tatvic-gcp-dev-team/shivam-repo/my-flaskimage:v1']
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  entrypoint: gcloud
+  args: ['run', 'deploy', 'flask-app','--images', 'asia-south1-docker.pkg.dev/tatvic-gcp-dev-team/shivam-repo/my-flaskimage:v1','--region', 'asia-south1', '--platform', 'managed','--allow-unauthenticated']
+images: 
+  - 'asia-south1-docker.pkg.dev/tatvic-gcp-dev-team/shivam-repo/my-flaskimage:v1'
